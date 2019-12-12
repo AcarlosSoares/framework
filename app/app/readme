@@ -1,0 +1,41 @@
+
+Aplicativo Modelo
+Aplicativo que servirá de modelo para o desenvolvimento de novos aplicativo web utilizando o framework Flask!
+
+Passos para a inicialização:
+
+Instalar o Pipenv: pip install pipenv
+Criar uma nova pasta: md nova_pasta
+Copiar o conteúdo do projeto 'framework' para a nova_pasta
+Entrar na nova pasta: cd nova_pasta
+Criar uma ambiente virtual para o projeto: pipenv install
+Acessar o ambiente virtual: pipenv shell
+Instalar os pacotes do projeto:
+
+ pipenv install flask
+ pipenv install flask-wtf
+ pipenv install flask-sqlalchemy
+ pipenv install flask-bcrypt
+ pipenv install flask-login
+ pipenv install flask-mail
+ pipenv install flask_material
+ pipenv install Pillow
+ pipenv install reportlab
+ pipenv install mysqlclient-1.4.2-cp37-cp37m-win_amd64.whl
+
+Cria um novo Schema no Mysql com o nome do projeto:
+
+DROP SCHEMA IF EXISTS `db_nome_do_projeto`
+CREATE SCHEMA IF NOT EXISTS `db_nome_do_projeto` DEFAULT CHARACTER SET utf8
+
+Criar as tabelas no Schema `db_nome_do_projeto`:
+
+Editar o programa: create_db.py
+Ajustar o parâmetro: 'SQLALCHEMY_DATABASE_URI'
+Executar o programa: python create_db.py
+
+Entrar na pasta app: cd app
+Ajustar as configuração do banco de dados no arquivo config.py
+Executar o aplicativo: python run.py
+Acessar o aplicativo no browser pelo endereço: http://127.0.0.1:5000
+
