@@ -1,0 +1,271 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<!--------------------------- LISTA DA TABELAS DE ASSOCIAÇÃO -------------------------->
+
+<!-- Título  -->
+<h2>
+  {{ title1 }}
+</h2>
+
+<!-- Sub-Título  -->
+<h3>
+  Conta: {{ nome_super }}
+
+  <!-- Botão Voltar -->
+  <a href="{{ url_for('setor.acessarSetor') }}" class="btn btn-outline-info float-md-right my-2" role="button" aria-pressed="true">Voltar</a>
+
+</h3><br>
+
+<div class="container">
+
+  <div class="content-section col-md-12">
+
+  <!----------------------- LISTA DA TABELA 2 -------------------------->
+  <div class="row">
+      <div class="col-6">
+
+        <div class="row">
+          <div class="col-6">
+            <h5>Lista de Usuários</h5>
+          </div>
+        </div>
+
+        <!-- Painel de Ordenação e Pesquisa -->
+        <form action="{{ url_for('setor.acessarUsuario', id_super=id_super, nome_super=nome_super) }}" method="POST">
+          {{ form.csrf_token }}
+
+          <!-- Painel Paginação -->
+          <div class="row">
+
+            <div class="col-6">
+              {% for page_num2 in dados2.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num2 %}
+
+                  {% if dados2.page == page_num2 %}
+                    <button class="btn btn-info my-2" type="submit" name="page2" value={{ page_num2 }}>{{ page_num2 }}
+                    </button>
+                  {% else %}
+                    <button class="btn btn-outline-info my-2" type="submit" name="page2" value={{ page_num2 }}>{{ page_num2 }}
+                    </button>
+                  {% endif %}
+
+                {% else %}
+                  ...
+                {% endif %}
+              {% endfor %}
+            </div>
+
+            <div class="col-6">
+              <!-- Botão Modal Pesquisar -->
+              <button class="btn btn-ligth btn-sm float-sm-right" type="submit" name="submit_limpar" value="Limpar" title="Limpar">
+                <i class="material-icons cor-verde">clear_all</i>
+              </button>
+              <a class="btn btn-ligth btn-sm float-sm-right" data-toggle="modal" href="#pesquisarModal" title="Ordenar/Filtrar">
+                <i class="material-icons cor-verde">search</i>
+              </a>
+            </div>
+
+            <!-- Modal Pesquisar Dados -->
+            <div class="modal fade" id="pesquisarModal">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Pesquisar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body">
+                    <div class="container bg-light border rounded-lg">
+                      <div class="row mb-2">
+
+                        <div class="col-sm-6">
+                          {{ form.ordenarpor.label(class="form-control-label") }}
+                          <div class="row">
+                            <div class="col-sm-6">
+                              {{ form.ordenarpor(class="form-control form-control-lm") }}
+                            </div>
+                            <div class="col-sm-6">
+                              {{ form.ordem(class="form-control form-control-lm") }}
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                          {{ form.pesquisarpor.label(class="form-control-label") }}
+                          <div class="row">
+                            <div class="col-sm-12">
+                              {{ form.pesquisarpor(class="form-control form-control-lm") }}
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="modal-footer">
+                    <a class="btn btn-outline-info">
+                      {{ form.submit_enviar }}
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- Fim Modal Pesquisar -->
+
+        </div> <!--  <div class="row"> -->
+      </form>
+
+      <!-- Tabela de Listagem dos Dados -->
+      <table style="width:100%" class="table table-sm bg-light table-bordered" cellspacing="0">
+
+        <!-- Cabeçalho da Tabela -->
+        <thead class="thead-dark">
+          <tr>
+            <th class="text-center" style="width: 30px">Seq</th>
+            <th class="text-center" style="width: 350px">Nome</th>
+            <th class="text-center" style="width: 150px">Setor</th>
+            <th class="text-center center-align" style="width: 60px">Ação</th>
+          </tr>
+        </thead>
+
+        <!-- Detalhe da Tabela -->
+        <tbody>
+          {% for dado in dados2.items %}
+
+            <tr>
+              <td style="vertical-align:middle">{{ dado.id }}</td>
+              <td style="vertical-align:middle">{{ dado.nomecompleto }}</td>
+              <td style="vertical-align:middle">{{ dado.setor.sigla }}</td>
+              <td class="text-center center-align">
+
+                <!-- Botão Adicionar -->
+                <a href="{{ url_for('setor.adicionarSetor', id_data=dado.id, id_super=id_super, nome_super=nome_super) }}" class="btn btn-ligth btn-sm" value="Adicionar" aria-label="Adicionar" aria-pressed="true" alt="Adicionar" title="Adicionar">
+                  <i class="material-icons cor-verde" style="vertical-align:middle;">add</i>
+                </a>
+
+              </td>
+            </tr>
+
+          {% endfor  %}
+        </tbody>
+      </table>
+
+    </div>
+    <!----------------------- LISTA DA TABELA 1 -------------------------->
+    <div class="col-6">
+
+      <div class="row">
+        <div class="col-6">
+          <h5>Lista de Usuários por Setor</h5>
+        </div>
+      </div>
+
+      <!-- Painel de Ordenação e Pesquisa -->
+      <form action="{{ url_for('setor.acessarUsuario', id_super=id_super, nome_super=nome_super) }}" method="POST">
+        {{ form.csrf_token }}
+
+        <!-- Painel Paginação e Botões Imprimir -->
+        <div class="row">
+          <div class="col s6 left-align">
+            {% for page_num in dados1.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+              {% if page_num %}
+
+                {% if dados1.page == page_num %}
+                  <button class="btn btn-info my-2" type="submit" name="page1" value={{ page_num }}>{{ page_num }}
+                  </button>
+                {% else %}
+                  <button class="btn btn-outline-info my-2" type="submit" name="page1" value={{ page_num }}>{{ page_num }}
+                  </button>
+                {% endif %}
+
+              {% else %}
+                ...
+              {% endif %}
+            {% endfor %}
+          </div>
+
+          <!-- Botão Imprimir -->
+          <div class="col-6">
+            <a href="{{ url_for('setor.imprimir2', id_super=id_super, nome_super=nome_super) }}" class="btn btn-light btn-sm float-sm-right" value="Imprimir" aria-label="Imprimir" aria-pressed="true" alt="Imprimir" title="Imprimir">
+              <i class="material-icons cor-marrom">print</i>
+            </a>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- Tabela de Listagem dos Dados -->
+      <table style="width:100%" class="table table-sm bg-light table-bordered" cellspacing="0">
+
+        <!-- Cabeçalho da Tabela -->
+        <thead class="thead-dark">
+          <tr>
+            <th class="text-center" style="width: 30px">Seq</th>
+            <th class="text-center" style="width: 350px">Nome</th>
+            <th class="text-center" style="width: 150px">Sigla</th>
+            <th class="text-center center-align" style="width: 60px">Ação</th>
+          </tr>
+        </thead>
+
+        <!-- Detalhe da Tabela -->
+        <tbody>
+          {% for dado in dados1.items %}
+
+            <tr>
+              <td style="vertical-align:middle">{{ dado.id }}</td>
+              <td style="vertical-align:middle">{{ dado.nomecompleto }}</td>
+              <td style="vertical-align:middle">{{ dado.setor.sigla }}</td>
+              <td class="text-center center-align">
+
+                <!-- Botão Excluir -->
+                <a class="btn btn-ligth btn-sm" data-toggle="modal" href="#excluirModal{{ dado.id }}" title="Excluir">
+                  <i class="material-icons cor-vermelho" style="vertical-align:middle;">delete</i>
+                </a>
+
+              </td>
+            </tr>
+
+            <!-- Modal Excluir Dados -->
+            <div class="modal fade" id="excluirModal{{ dado.id }}">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Excluir Registro</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+
+                  <div class="modal-body">
+                    <p>Confirma a exclusão: {{ dado.nomecompleto }}? </p>
+                  </div>
+
+                  <div class="modal-footer">
+                    <form action="{{ url_for('setor.excluirUsuarioSetor', id_data=dado.id, id_super=id_super, nome_super=nome_super) }}" method="POST">
+                      {{ form.csrf_token }}
+                      <input type="submit" value="Sim" class="btn btn-outline-info">
+                    </form>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            <!-- Fim Modal Excluir Dados -->
+
+
+          {% endfor  %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
