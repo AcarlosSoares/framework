@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from sqlalchemy import desc, asc, text
 from app import db, bcrypt
 from app.auth.utils import save_picture
-from app.models.models import Conta, Usuario, Grupo
+from app.models.models import Conta, Usuario, Grupo, Setor
 from app.conta.forms import ListaContaUsuarioForm, IncluiContaUsuarioForm, AlteraContaUsuarioForm, \
  ListaGrupoForm
 import os
@@ -69,6 +69,15 @@ def incluir():
     return redirect(url_for('conta.acessar'))
 
   form = IncluiContaUsuarioForm()
+
+  pesquisarpor = request.form.get('pesquisarpor')
+  print(pesquisarpor)
+  if pesquisarpor:
+    filter_column = text(' LIKE ' + "'%" + pesquisarpor + "%'")
+    print(filter_column)
+    form.setor_id.choices = [(k.id, k.nome) for k in Setor.query.filter(filter_column).all()]
+  else:
+    form.setor_id.choices = [(k.id, k.nome) for k in Setor.query.all()]
 
   if request.method == 'GET':
     return render_template('inclui_conta.html', title='Incluir Conta', form=form)
@@ -201,7 +210,6 @@ def alterar(id_data):
     except Exception as e:
       flash('Falha no aplicativo! ' + str(e), 'danger')
       return redirect(url_for('conta.acessar'))
-
 
 @conta.route('/conta/imprimir', methods=['GET'])
 @login_required

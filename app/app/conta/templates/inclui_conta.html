@@ -20,7 +20,7 @@
                 {% else %} Título
                 {% endif %}
 
-                <button type="button" class="close" onclick="window.location.href = '{{ url_for('conta.acessar') }}';">
+                <button type="button" class="close" title="Fechar" onclick="window.location.href = '{{ url_for('conta.acessar') }}';">
                 &times;
                 </button>
 
@@ -65,9 +65,58 @@
                     <div class="col-sm-8">
                       {{ render_picture_field(form.foto) }}
                     </div>
-                    <div class="col-sm-12">
+                    <div class="col-sm-11">
                       {{ render_select_field2(form.setor_id) }}
                     </div>
+                    <div class="col-sm-1">
+                      <!-- Botão Modal Pesquisar -->
+                      <label class="form-control-label" for="pesquisar_id"></label>
+                      <a id="pesquisar_id" class="btn btn-ligth float-sm-right my-2" data-toggle="modal" href="#pesquisarModal" title="Pesquisar">
+                        <i class="material-icons">search</i>
+                      </a>
+
+                    </div>
+
+                    <!-- Modal Pesquisar Dados -->
+                    <div class="modal fade" id="pesquisarModal">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Pesquisar</h5>
+                            <button type="button" class="close" title="Fechar" data-dismiss="modal">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+
+                          <div class="modal-body">
+                            <div class="container bg-light border rounded-lg">
+                              <div class="row mb-2">
+
+                                <div class="col-sm-12">
+                                  {{ form.pesquisarpor.label(class="form-control-label") }}
+                                  <div class="row">
+                                  <div class="col-sm-12">
+                                    {{ form.pesquisarpor(class="form-control form-control-lm") }}
+                                  </div>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="modal-footer">
+                            <!-- Botão Modal Pesquisar -->
+                            <a class="btn btn-outline-info my-2" href="{{ url_for('conta.incluir') }}" title="Pesquisar">Pesquisar
+                            </a>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Fim Modal Pesquisar -->
+
                 </div>
               </div>
 

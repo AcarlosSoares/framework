@@ -208,7 +208,6 @@ def acessarUsuario(id_super, nome_super):
   title2='Lista de Usuários'
 
   try:
-    print(id_super)
     por_page1 = 5
     page1 = request.form.get('page1', 1, type=int)
     dados1 = Usuario.query.filter_by(setor_id=id_super).paginate(page=page1, per_page=por_page1)

@@ -36,6 +36,7 @@ class IncluiContaUsuarioForm(FlaskForm):
    Length(min=11, max=11, message='CPF deve ter 11 caracteres!')])
   foto = FileField('Foto', validators=[FileAllowed(['jpg', 'png'])])
   setor_id = SelectField('Setor', coerce=int, validators=[DataRequired(message='Setor deve ser prenchido!')])
+  pesquisarpor = StringField('Pesquisar')
   submit = SubmitField('Enviar')
 
   def validate_nomeusuario(self, nomeusuario):
@@ -45,7 +46,8 @@ class IncluiContaUsuarioForm(FlaskForm):
 
   def __init__(self):
     super(IncluiContaUsuarioForm, self).__init__()
-    self.setor_id.choices = [(k.id, k.nome) for k in Setor.query.all()]
+    # self.setor_id.choices = [(k.id, k.nome) for k in Setor.query.all()]
+    self.setor_id.choices = []
 
 
 class AlteraContaUsuarioForm(FlaskForm):
@@ -79,3 +81,8 @@ class AlteraContaUsuarioForm(FlaskForm):
 
 class ListaGrupoForm(FlaskForm):
   hiden = StringField('')
+
+
+class PesquisarSetorForm(FlaskForm):
+  pesquisarpor = StringField('Pesquisar')
+

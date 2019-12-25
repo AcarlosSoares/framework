@@ -19,253 +19,259 @@
 
 <div class="container">
 
-  <div class="content-section col-md-12">
+	<div class="content-section col-md-12">
 
-  <!----------------------- LISTA DA TABELA 2 -------------------------->
-  <div class="row">
-      <div class="col-6">
+		<!----------------------- LISTA DA TABELA 2 -------------------------->
+		<div class="row">
+			<div class="col-6">
 
-        <div class="row">
-          <div class="col-6">
-            <h5>Lista de Usuários</h5>
-          </div>
-        </div>
+				<div class="row">
+					<div class="col-6">
+						<h5>Lista de Usuários</h5>
+					</div>
+				</div>
 
-        <!-- Painel de Ordenação e Pesquisa -->
-        <form action="{{ url_for('setor.acessarUsuario', id_super=id_super, nome_super=nome_super) }}" method="POST">
-          {{ form.csrf_token }}
+				<hr/>
 
-          <!-- Painel Paginação -->
-          <div class="row">
+					<!-- Painel de Ordenação e Pesquisa -->
+				<form action="{{ url_for('setor.acessarUsuario', id_super=id_super, nome_super=nome_super) }}" method="POST">
+				{{ form.csrf_token }}
 
-            <div class="col-6">
-              {% for page_num2 in dados2.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-                {% if page_num2 %}
+					<!-- Painel Paginação -->
+					<div class="row">
 
-                  {% if dados2.page == page_num2 %}
-                    <button class="btn btn-info my-2" type="submit" name="page2" value={{ page_num2 }}>{{ page_num2 }}
-                    </button>
-                  {% else %}
-                    <button class="btn btn-outline-info my-2" type="submit" name="page2" value={{ page_num2 }}>{{ page_num2 }}
-                    </button>
-                  {% endif %}
+						<div class="col-6">
+							{% for page_num2 in dados2.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+								{% if page_num2 %}
 
-                {% else %}
-                  ...
-                {% endif %}
-              {% endfor %}
-            </div>
+								  {% if dados2.page == page_num2 %}
+									<button class="btn btn-info my-2" type="submit" name="page2" value={{ page_num2 }}>{{ page_num2 }}
+									</button>
+								  {% else %}
+									<button class="btn btn-outline-info my-2" type="submit" name="page2" value={{ page_num2 }}>{{ page_num2 }}
+									</button>
+								  {% endif %}
 
-            <div class="col-6">
-              <!-- Botão Modal Pesquisar -->
-              <button class="btn btn-ligth btn-sm float-sm-right" type="submit" name="submit_limpar" value="Limpar" title="Limpar">
-                <i class="material-icons cor-verde">clear_all</i>
-              </button>
-              <a class="btn btn-ligth btn-sm float-sm-right" data-toggle="modal" href="#pesquisarModal" title="Ordenar/Filtrar">
-                <i class="material-icons cor-verde">search</i>
-              </a>
-            </div>
+								{% else %}
+								  ...
+								{% endif %}
+							{% endfor %}
+						</div>
 
-            <!-- Modal Pesquisar Dados -->
-            <div class="modal fade" id="pesquisarModal">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
+						<div class="col-6">
 
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Pesquisar</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
+							<!-- Botão Limpar -->
+							<button class="btn btn-ligth float-sm-right bg-white" type="submit" name="submit_limpar" value="Limpar" title="Limpar">
+								<i class="material-icons">clear_all</i>
+							</button>
 
-                  <div class="modal-body">
-                    <div class="container bg-light border rounded-lg">
-                      <div class="row mb-2">
+							<!-- Botão Modal Pesquisar -->
+							<a class="btn btn-ligth float-sm-right bg-white" data-toggle="modal" href="#pesquisarModal" title="Ordenar/Filtrar">
+								<i class="material-icons">search</i>
+							</a>
 
-                        <div class="col-sm-6">
-                          {{ form.ordenarpor.label(class="form-control-label") }}
-                          <div class="row">
-                            <div class="col-sm-6">
-                              {{ form.ordenarpor(class="form-control form-control-lm") }}
-                            </div>
-                            <div class="col-sm-6">
-                              {{ form.ordem(class="form-control form-control-lm") }}
-                            </div>
-                          </div>
-                        </div>
+						</div>
 
-                        <div class="col-sm-6">
-                          {{ form.pesquisarpor.label(class="form-control-label") }}
-                          <div class="row">
-                            <div class="col-sm-12">
-                              {{ form.pesquisarpor(class="form-control form-control-lm") }}
-                            </div>
-                          </div>
-                        </div>
+						<!-- Modal Pesquisar Dados -->
+						<div class="modal fade" id="pesquisarModal">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
 
-                      </div>
-                    </div>
+								  <div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle">Ordenar/Filtrar</h5>
+										<button type="button" class="close" title="Fechar" data-dismiss="modal">
+										  <span aria-hidden="true">&times;</span>
+										</button>
+								  </div>
 
-                  </div>
+								  <div class="modal-body">
+										<div class="container bg-light border rounded-lg">
+									  	<div class="row mb-2">
 
-                  <div class="modal-footer">
-                    <a class="btn btn-outline-info">
-                      {{ form.submit_enviar }}
-                    </a>
-                  </div>
+												<div class="col-sm-6">
+												  {{ form.ordenarpor.label(class="form-control-label") }}
+												  <div class="row">
+													<div class="col-sm-6">
+													  {{ form.ordenarpor(class="form-control form-control-lm") }}
+													</div>
+													<div class="col-sm-6">
+													  {{ form.ordem(class="form-control form-control-lm") }}
+													</div>
+												  </div>
+												</div>
 
-                </div>
-              </div>
-            </div>
-            <!-- Fim Modal Pesquisar -->
+												<div class="col-sm-6">
+												  {{ form.pesquisarpor.label(class="form-control-label") }}
+												  <div class="row">
+													<div class="col-sm-12">
+													  {{ form.pesquisarpor(class="form-control form-control-lm") }}
+													</div>
+												  </div>
+												</div>
 
-        </div> <!--  <div class="row"> -->
-      </form>
+										  </div>
+										</div>
+								  </div>
 
-      <!-- Tabela de Listagem dos Dados -->
-      <table style="width:100%" class="table table-sm bg-light table-bordered" cellspacing="0">
+								  <div class="modal-footer">
+									{{ form.submit_enviar(class="btn btn-outline-info") }}
+								  </div>
 
-        <!-- Cabeçalho da Tabela -->
-        <thead class="thead-dark">
-          <tr>
-            <th class="text-center" style="width: 30px">Seq</th>
-            <th class="text-center" style="width: 350px">Nome</th>
-            <th class="text-center" style="width: 150px">Setor</th>
-            <th class="text-center center-align" style="width: 60px">Ação</th>
-          </tr>
-        </thead>
+								</div>
+							</div>
+						</div>
+						<!-- Fim Modal Pesquisar -->
 
-        <!-- Detalhe da Tabela -->
-        <tbody>
-          {% for dado in dados2.items %}
+					</div> <!--  <div class="row"> -->
+				</form>
 
-            <tr>
-              <td style="vertical-align:middle">{{ dado.id }}</td>
-              <td style="vertical-align:middle">{{ dado.nomecompleto }}</td>
-              <td style="vertical-align:middle">{{ dado.setor.sigla }}</td>
-              <td class="text-center center-align">
+				<!-- Tabela de Listagem dos Dados -->
+				<table style="width:100%" class="table table-sm bg-light table-bordered" cellspacing="0">
 
-                <!-- Botão Adicionar -->
-                <a href="{{ url_for('setor.adicionarSetor', id_data=dado.id, id_super=id_super, nome_super=nome_super) }}" class="btn btn-ligth btn-sm" value="Adicionar" aria-label="Adicionar" aria-pressed="true" alt="Adicionar" title="Adicionar">
-                  <i class="material-icons cor-verde" style="vertical-align:middle;">add</i>
-                </a>
+					<!-- Cabeçalho da Tabela -->
+					<thead class="thead-dark">
+						<tr>
+							<th class="text-center" style="width: 30px">Seq</th>
+							<th class="text-center" style="width: 350px">Nome</th>
+							<th class="text-center" style="width: 150px">Setor</th>
+							<th class="text-center" style="width: 60px">Ação</th>
+						</tr>
+					</thead>
 
-              </td>
-            </tr>
+					<!-- Detalhe da Tabela -->
+					<tbody>
+					{% for dado in dados2.items %}
 
-          {% endfor  %}
-        </tbody>
-      </table>
+						<tr>
+							<td style="vertical-align:middle">{{ dado.id }}</td>
+							<td style="vertical-align:middle">{{ dado.nomecompleto }}</td>
+							<td style="vertical-align:middle">{{ dado.setor.sigla }}</td>
+							<td class="text-center">
 
-    </div>
-    <!----------------------- LISTA DA TABELA 1 -------------------------->
-    <div class="col-6">
+								<!-- Botão Adicionar -->
+								<a href="{{ url_for('setor.adicionarSetor', id_data=dado.id, id_super=id_super, nome_super=nome_super) }}" class="btn btn-ligth btn-sm" value="Adicionar" title="Adicionar">
+								  <i class="material-icons cor-verde" style="vertical-align:middle;">add</i>
+								</a>
 
-      <div class="row">
-        <div class="col-6">
-          <h5>Lista de Usuários por Setor</h5>
-        </div>
-      </div>
+							</td>
+						</tr>
 
-      <!-- Painel de Ordenação e Pesquisa -->
-      <form action="{{ url_for('setor.acessarUsuario', id_super=id_super, nome_super=nome_super) }}" method="POST">
-        {{ form.csrf_token }}
+						  {% endfor  %}
+						</tbody>
+					</table>
 
-        <!-- Painel Paginação e Botões Imprimir -->
-        <div class="row">
-          <div class="col s6 left-align">
-            {% for page_num in dados1.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-              {% if page_num %}
+			</div>
 
-                {% if dados1.page == page_num %}
-                  <button class="btn btn-info my-2" type="submit" name="page1" value={{ page_num }}>{{ page_num }}
-                  </button>
-                {% else %}
-                  <button class="btn btn-outline-info my-2" type="submit" name="page1" value={{ page_num }}>{{ page_num }}
-                  </button>
-                {% endif %}
+			<!----------------------- LISTA DA TABELA 1 -------------------------->
+			<div class="col-6">
 
-              {% else %}
-                ...
-              {% endif %}
-            {% endfor %}
-          </div>
+				<div class="row">
+					<div class="col-6">
+						<h5>Lista de Usuários por Setor</h5>
+					</div>
+				</div>
 
-          <!-- Botão Imprimir -->
-          <div class="col-6">
-            <a href="{{ url_for('setor.imprimir2', id_super=id_super, nome_super=nome_super) }}" class="btn btn-light btn-sm float-sm-right" value="Imprimir" aria-label="Imprimir" aria-pressed="true" alt="Imprimir" title="Imprimir">
-              <i class="material-icons cor-marrom">print</i>
-            </a>
-          </div>
-        </div>
+				<hr/>
 
-      </form>
+				<!-- Painel de Ordenação e Pesquisa -->
+				<form action="{{ url_for('setor.acessarUsuario', id_super=id_super, nome_super=nome_super) }}" method="POST">
+				{{ form.csrf_token }}
 
-      <!-- Tabela de Listagem dos Dados -->
-      <table style="width:100%" class="table table-sm bg-light table-bordered" cellspacing="0">
+					<!-- Painel Paginação e Botões Imprimir -->
+					<div class="row">
+						<div class="col-6">
+							{% for page_num in dados1.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+							  {% if page_num %}
 
-        <!-- Cabeçalho da Tabela -->
-        <thead class="thead-dark">
-          <tr>
-            <th class="text-center" style="width: 30px">Seq</th>
-            <th class="text-center" style="width: 350px">Nome</th>
-            <th class="text-center" style="width: 150px">Sigla</th>
-            <th class="text-center center-align" style="width: 60px">Ação</th>
-          </tr>
-        </thead>
+								{% if dados1.page == page_num %}
+								  <button class="btn btn-info my-2" type="submit" name="page1" value={{ page_num }}>{{ page_num }}
+								  </button>
+								{% else %}
+								  <button class="btn btn-outline-info my-2" type="submit" name="page1" value={{ page_num }}>{{ page_num }}
+								  </button>
+								{% endif %}
 
-        <!-- Detalhe da Tabela -->
-        <tbody>
-          {% for dado in dados1.items %}
+							  {% else %}
+								...
+							  {% endif %}
+							{% endfor %}
+						</div>
 
-            <tr>
-              <td style="vertical-align:middle">{{ dado.id }}</td>
-              <td style="vertical-align:middle">{{ dado.nomecompleto }}</td>
-              <td style="vertical-align:middle">{{ dado.setor.sigla }}</td>
-              <td class="text-center center-align">
+						<!-- Botão Imprimir -->
+						<div class="col-6">
+							<a href="{{ url_for('setor.imprimir2', id_super=id_super, nome_super=nome_super) }}" class="btn btn-light float-sm-right bg-white" value="Imprimir" title="Imprimir">
+							  <i class="material-icons">print</i>
+							</a>
+						</div>
+					</div>
 
-                <!-- Botão Excluir -->
-                <a class="btn btn-ligth btn-sm" data-toggle="modal" href="#excluirModal{{ dado.id }}" title="Excluir">
-                  <i class="material-icons cor-vermelho" style="vertical-align:middle;">delete</i>
-                </a>
+				</form>
 
-              </td>
-            </tr>
+				<!-- Tabela de Listagem dos Dados -->
+				<table style="width:100%" class="table table-sm bg-light table-bordered" cellspacing="0">
 
-            <!-- Modal Excluir Dados -->
-            <div class="modal fade" id="excluirModal{{ dado.id }}">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
+					<!-- Cabeçalho da Tabela -->
+					<thead class="thead-dark">
+						<tr>
+							<th class="text-center" style="width: 30px">Seq</th>
+							<th class="text-center" style="width: 350px">Nome</th>
+							<th class="text-center" style="width: 150px">Setor</th>
+							<th class="text-center" style="width: 60px">Ação</th>
+						</tr>
+					</thead>
 
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Excluir Registro</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
+					<!-- Detalhe da Tabela -->
+					<tbody>
+						{% for dado in dados1.items %}
 
-                  <div class="modal-body">
-                    <p>Confirma a exclusão: {{ dado.nomecompleto }}? </p>
-                  </div>
+						<tr>
+							<td style="vertical-align:middle">{{ dado.id }}</td>
+							<td style="vertical-align:middle">{{ dado.nomecompleto }}</td>
+							<td style="vertical-align:middle">{{ dado.setor.sigla }}</td>
+							<td class="text-center">
 
-                  <div class="modal-footer">
-                    <form action="{{ url_for('setor.excluirUsuarioSetor', id_data=dado.id, id_super=id_super, nome_super=nome_super) }}" method="POST">
-                      {{ form.csrf_token }}
-                      <input type="submit" value="Sim" class="btn btn-outline-info">
-                    </form>
-                  </div>
+							<!-- Botão Excluir -->
+							<a class="btn btn-ligth btn-sm" data-toggle="modal" href="#excluirModal{{ dado.id }}" title="Excluir">
+								<i class="material-icons cor-vermelho" style="vertical-align:middle;">delete</i>
+							</a>
 
-                </div>
-              </div>
-            </div>
-            <!-- Fim Modal Excluir Dados -->
+							</td>
+						</tr>
 
+						<!-- Modal Excluir Dados -->
+						<div class="modal fade" id="excluirModal{{ dado.id }}">
+							<div class="modal-dialog modal-dialog-centered" role="document">
+								<div class="modal-content">
 
-          {% endfor  %}
-        </tbody>
-      </table>
-    </div>
-  </div>
+								  <div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLongTitle">Excluir Registro</h5>
+									<button type="button" class="close" title="Fechar" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+
+								  <div class="modal-body">
+									<p>Confirma a exclusão: {{ dado.nomecompleto }}? </p>
+								  </div>
+
+								  <div class="modal-footer">
+									<form action="{{ url_for('setor.excluirUsuarioSetor', id_data=dado.id, id_super=id_super, nome_super=nome_super) }}" method="POST">
+									  {{ form.csrf_token }}
+									  <input type="submit" value="Sim" class="btn btn-outline-info">
+									</form>
+								  </div>
+
+								</div>
+							</div>
+						</div>
+						<!-- Fim Modal Excluir Dados -->
+
+					{% endfor  %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 
 {% endblock content %}
