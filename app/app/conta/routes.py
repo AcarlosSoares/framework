@@ -153,13 +153,21 @@ def alterar(id_data):
 
   form = AlteraContaUsuarioForm()
 
+  print(form.pesquisarpor.data)
+  if form.pesquisarpor.data:
+    # filter_column = text(' setor_set.ds_nome_set LIKE ' + "'%" + form.pesquisarpor.data + "%'")
+    filter_column = text(' setor_set.ds_nome_set LIKE ' + "'%" + form.pesquisarpor.data + "%'")
+    print(filter_column)
+    form.setor_id.choices = [(k.id, k.nome) for k in Setor.query.filter(filter_column).all()]
+  else:
+    form.setor_id.choices = [(k.id, k.nome) for k in Setor.query.all()]
+
   if request.method == 'GET':
     try:
       dado = Conta.query.get(id_data)
       if (dado):
         form.nomeusuario.data = dado.usuario
         form.email.data = dado.email
-        form.senha.data = dado.senha
       if (dado.usuarios):
         form.nomecompleto.data = dado.usuarios.nomecompleto
         form.nomeguerra.data = dado.usuarios.nomeguerra
@@ -175,7 +183,7 @@ def alterar(id_data):
       else:
         foto = url_for('static', filename='profile_pics/' + 'default.jpg')
 
-      return render_template('altera_conta.html', title='Alterar Conta', form=form, foto=foto)
+      return render_template('altera_conta.html', id_data=dado.id, title='Alterar Conta', form=form, foto=foto)
 
     except Exception as e:
       flash('Falha no aplicativo! ' + str(e), 'danger')
@@ -192,11 +200,9 @@ def alterar(id_data):
       picture_file = "default.jpg"
 
     try:
-      hashed_senha = bcrypt.generate_password_hash(form.senha.data).decode('utf-8')
       dado = Conta.query.get(id_data)
       dado.usuario = form.nomeusuario.data
       dado.email = form.email.data
-      dado.senha = hashed_senha
       dado.usuarios.nomecompleto = form.nomecompleto.data
       dado.usuarios.nomeguerra = form.nomeguerra.data
       dado.usuarios.datanascimento = form.datanascimento.data
@@ -210,6 +216,55 @@ def alterar(id_data):
     except Exception as e:
       flash('Falha no aplicativo! ' + str(e), 'danger')
       return redirect(url_for('conta.acessar'))
+
+
+@conta.route('/conta/pesquisar/<int:id_data>/<string:nome_setor>', methods=['GET'])
+@login_required
+def pesquisar(id_data, nome_setor):
+
+  if not current_user.is_authenticated:
+    flash('Usuário não autorizado!', 'info')
+    return redirect(url_for('conta.acessar'))
+
+  form = AlteraContaUsuarioForm()
+  print(form.pesquisarpor.data)
+  print('* * *  Pesquisar')
+  print(nome_setor)
+  if nome_setor:
+    # filter_column = text(' setor_set.ds_nome_set LIKE ' + "'%" + form.pesquisarpor.data + "%'")
+    filter_column = text(' setor_set.ds_nome_set LIKE ' + "'%" + nome_setor + "%'")
+    print(filter_column)
+    form.setor_id.choices = [(k.id, k.nome) for k in Setor.query.filter(filter_column).all()]
+  else:
+    form.setor_id.choices = [(k.id, k.nome) for k in Setor.query.all()]
+
+  if request.method == 'GET':
+    try:
+      dado = Conta.query.get(id_data)
+      if (dado):
+        form.nomeusuario.data = dado.usuario
+        form.email.data = dado.email
+      if (dado.usuarios):
+        form.nomecompleto.data = dado.usuarios.nomecompleto
+        form.nomeguerra.data = dado.usuarios.nomeguerra
+        form.datanascimento.data = dado.usuarios.datanascimento
+        form.matricula.data = dado.usuarios.matricula
+        form.cpf.data = dado.usuarios.cpf
+        form.foto.data = dado.usuarios.foto
+        if dado.usuarios.setor_id:
+          form.setor_id.process_data(dado.usuarios.setor_id)
+
+      if dado.usuarios.foto:
+        foto = url_for('static', filename='profile_pics/' + dado.usuarios.foto)
+      else:
+        foto = url_for('static', filename='profile_pics/' + 'default.jpg')
+
+      return render_template('altera_conta.html', id_data=dado.id, title='Alterar Conta', form=form, foto=foto)
+
+    except Exception as e:
+      flash('Falha no aplicativo! ' + str(e), 'danger')
+      return redirect(url_for('conta.acessar'))
+
 
 @conta.route('/conta/imprimir', methods=['GET'])
 @login_required

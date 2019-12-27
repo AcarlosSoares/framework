@@ -42,7 +42,7 @@ def logout():
 def register():
 
   # if current_user.is_authenticated:
-  #   return redirect(url_for('main.home'))
+  #   return redirect(url_for('principal.inicio'))
 
   populateGrupo()  # Cadastra o grupo "Administradores" caso ainda não exista
 
@@ -135,8 +135,8 @@ def account():
 @auth.route("/reset_senha", methods=['GET', 'POST'])
 def reset_senha():
 
-  if current_user.is_authenticated:
-    return redirect(url_for('main.home'))
+  # if current_user.is_authenticated:
+  #   return redirect(url_for('principal.inicio'))
 
   form = RequestResetForm()
 
@@ -153,7 +153,7 @@ def reset_senha():
 def reset_token(token):
 
   if current_user.is_authenticated:
-    return redirect(url_for('main.home'))
+    return redirect(url_for('principal.inicio'))
 
   try:
     conta = Conta.verify_reset_token(token)
