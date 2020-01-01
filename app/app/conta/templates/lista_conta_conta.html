@@ -46,33 +46,33 @@
 					  </div>
 					</div>
 
-					<!-- Painel Paginação e Botões Imprimir e Novo -->
-					<div>
-						{% for page_num in dados.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-						  {% if page_num %}
-						    {% if dados.page == page_num %}
-						      <input class="btn btn-info my-2" name="page" type="submit" value={{ page_num }} />
-						    {% else %}
-						      <input class="btn btn-outline-info my-2" name="page" type="submit" value={{ page_num }} />
-						    {% endif %}
-						  {% else %}
-						    ...
-						  {% endif %}
-						{% endfor %}
-
-						<!-- Botão Novo -->
-						<a href="{{ url_for('conta.incluir') }}" class="btn btn-ligth btn-sm float-sm-right my-2 mx-2" aria-label="Incluir" aria-pressed="true" alt="Novo" title="Novo">
-						  <i class="material-icons cor-verde">note_add</i>
-						</a>
-
-						<!-- Botão Imprimir -->
-						<a href="{{ url_for('conta.imprimir') }}" class="btn btn-ligth btn-sm float-sm-right my-2" value="Imprimir" aria-label="Imprimir" aria-pressed="true" alt="Imprimir" title="Imprimir">
-						  <i class="material-icons cor-marrom">print</i>
-						</a>
-
-					</div>
-
 				</form>
+
+				<!-- Painel Paginação e Botões Imprimir e Novo -->
+				<div>
+					{% for page_num in dados.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+					  {% if page_num %}
+					    {% if dados.page == page_num %}
+					      <input class="btn btn-info my-2" name="page" type="submit" value={{ page_num }} />
+					    {% else %}
+					      <input class="btn btn-outline-info my-2" name="page" type="submit" value={{ page_num }} />
+					    {% endif %}
+					  {% else %}
+					    ...
+					  {% endif %}
+					{% endfor %}
+
+					<!-- Botão Novo -->
+					<a href="{{ url_for('conta.incluir') }}" class="btn btn-ligth btn-sm float-sm-right my-2 mx-2" aria-label="Incluir" aria-pressed="true" alt="Novo" title="Novo">
+					  <i class="material-icons cor-verde">note_add</i>
+					</a>
+
+					<!-- Botão Imprimir -->
+					<a href="{{ url_for('conta.imprimir') }}" class="btn btn-ligth btn-sm float-sm-right my-2" value="Imprimir" aria-label="Imprimir" aria-pressed="true" alt="Imprimir" title="Imprimir">
+					  <i class="material-icons cor-marrom">print</i>
+					</a>
+
+				</div>
 
 				<!-- Tabela de Listagem dos Dados -->
 				<div class="table-responsive">
@@ -83,10 +83,10 @@
 							<tr>
 								<th class="text-center" style="width: 30px">Seq</th>
 								<th class="text-center" style="width: 100px">Usuário</th>
-								<th class="text-center" style="width: 200px">Nome</th>
+								<th class="text-center" style="width: 180px">Nome</th>
 								<th class="text-center" style="width: 100px">Nome Guerra</th>
 								<th class="text-center" style="width: 50px">Matricula</th>
-								<th class="text-center" style="width: 120px">Ação</th>
+								<th class="text-center" style="width: 140px">Ação</th>
 							</tr>
 						</thead>
 
@@ -102,9 +102,14 @@
 									<td style="vertical-align:middle">{{ dado.usuarios.matricula }}</td>
 									<td class="text-center">
 
-										<!-- Botão Alterar -->
-										<a href="{{ url_for('conta.alterar', id_data=dado.id) }}" class="btn btn-ligth btn-sm" role="button" aria-label="Alterar" aria-pressed="true" title="Alterar">
+										<!-- Botão Alterar Dados -->
+										<a href="{{ url_for('conta.alterar', id_data=dado.id) }}" class="btn btn-ligth btn-sm" role="button" aria-label="Alterar" aria-pressed="true" title="Alterar Dados">
 										  <i class="material-icons cor-azul" style="vertical-align:middle;">create</i>
+										</a>
+
+										<!-- Botão Alterar Senha -->
+										<a href="{{ url_for('conta.alterarsenha', id_data=dado.id) }}" class="btn btn-ligth btn-sm" role="button" aria-label="Alterar" aria-pressed="true" title="Alterar Senha">
+										  <i class="material-icons" style="vertical-align:middle;">lock</i>
 										</a>
 
 										<!-- Botão Excluir -->

@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% from "macros.html" import render_field, render_select_field2, render_picture_field %}
+{% block content %}
+
+  <div class="row align-items-center justify-content-center">
+    <div class="content-section col-md-6">
+
+      <div class="panel-body">
+
+        <div class="modal-body">
+
+          <form action="" method="POST" enctype="multipart/form-data">
+          <!-- {{ form.csrf_token }} -->
+          {{ form.hidden_tag() }}
+
+            <fieldset class="form-group">
+
+              <legend class="border-bottom mb-4">
+
+                {% if title %} {{ title }}
+                {% else %} Título
+                {% endif %}
+
+                <button type="button" class="close" title="Fechar" onclick="window.location.href = '{{ url_for('conta.acessar') }}';">
+                &times;
+                </button>
+
+              </legend>
+
+              <div class="media">
+
+                <img class="rounded-circle account-img" style="width:70px;height:70px;" src="{{ foto }}">
+
+                <div class="media-body">
+                  <h2 class="account-heading">{{ current_user.usuario }}</h2>
+                  <p class="text-secondary">{{ current_user.email }}</p>
+                </div>
+
+              </div>
+
+              <div class="content-section bg-light rounded-lg">
+                <div class="row">
+                  <div class="col-sm-12">
+                    {{ render_field(form.senha) }}
+                  </div>
+                  <div class="col-sm-12">
+                    {{ render_field(form.confirmasenha) }}
+                  </div>
+                </div>
+              </div>
+
+            </fieldset>
+
+            <div class="modal-footer">
+              <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+              </div>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}

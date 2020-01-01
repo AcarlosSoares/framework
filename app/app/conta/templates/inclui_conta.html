@@ -65,16 +65,17 @@
                     <div class="col-sm-8">
                       {{ render_picture_field(form.foto) }}
                     </div>
-                    <div class="col-sm-11">
+                    <div class="col-sm-8">
                       {{ render_select_field2(form.setor_id) }}
                     </div>
-                    <div class="col-sm-1">
-                      <!-- Botão Modal Pesquisar -->
-                      <label class="form-control-label" for="pesquisar_id"></label>
-                      <a id="pesquisar_id" class="btn btn-ligth float-sm-right my-2" data-toggle="modal" href="#pesquisarModal" title="Pesquisar">
-                        <i class="material-icons">search</i>
-                      </a>
-
+                    <div class="col-sm-4">
+                      {{ form.pesquisarpor.label(class="form-control-label") }}
+                      <div class="input-group mt-2">
+                        {{ form.pesquisarpor(class="form-control form-control-lm") }}
+                        <div class="input-group-append">
+                          {{ form.submitpesquisarpor(class="btn btn-outline-info") }}
+                        </div>
+                      </div>
                     </div>
 
                     <!-- Modal Pesquisar Dados -->

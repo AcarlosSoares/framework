@@ -35,8 +35,9 @@ class IncluiContaUsuarioForm(FlaskForm):
   cpf = StringField('CPF', validators=[DataRequired(message='CPF deve ser prenchido!'),
    Length(min=11, max=11, message='CPF deve ter 11 caracteres!')])
   foto = FileField('Foto', validators=[FileAllowed(['jpg', 'png'])])
-  setor_id = SelectField('Setor', coerce=int, validators=[DataRequired(message='Setor deve ser prenchido!')])
-  pesquisarpor = StringField('Pesquisar')
+  setor_id = SelectField('Setor', coerce=int)
+  pesquisarpor = StringField('Pesquisar Setor', description='Pesquisar')
+  submitpesquisarpor = SubmitField('Ir')
   submit = SubmitField('Enviar')
 
   def validate_nomeusuario(self, nomeusuario):
@@ -64,7 +65,7 @@ class AlteraContaUsuarioForm(FlaskForm):
   cpf = StringField('CPF', validators=[DataRequired(message='CPF deve ser prenchido!'),
    Length(min=11, max=11, message='CPF deve ter 11 caracteres!')])
   foto = FileField('Foto', validators=[FileAllowed(['jpg', 'png'])])
-  setor_id = SelectField('Setor', coerce=int, validators=[DataRequired(message='Setor deve ser prenchido!')])
+  setor_id = SelectField('Setor', coerce=int)
   pesquisarpor = StringField('Pesquisar Setor', description='Pesquisar')
   submitpesquisarpor = SubmitField('Ir')
   submit = SubmitField('Enviar')
@@ -79,6 +80,10 @@ class AlteraContaUsuarioForm(FlaskForm):
     # self.setor_id.choices = [(k.id, k.nome) for k in Setor.query.all()]
     self.setor_id.choices = []
 
+class AlteraSenhaContaUsuarioForm(FlaskForm):
+  senha = PasswordField('Nova Senha', validators=[DataRequired(message='Senha deve ser prenchido!')])
+  confirmasenha = PasswordField('Confirma Nova Senha', validators=[DataRequired(message='Senha deve ser prenchido!'), EqualTo('senha')])
+  submit = SubmitField('Enviar')
 
 class ListaGrupoForm(FlaskForm):
   hiden = StringField('')

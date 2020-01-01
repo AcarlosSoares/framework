@@ -6,6 +6,7 @@
     <div class="content-section col-md-10">
 
       <div class="panel-body">
+
         <div class="modal-body">
 
           <form action="" method="POST" enctype="multipart/form-data">
@@ -73,22 +74,15 @@
                     <div class="col-sm-8">
                       {{ render_select_field2(form.setor_id) }}
                     </div>
-
                     <div class="col-sm-4">
                       {{ form.pesquisarpor.label(class="form-control-label") }}
                       <div class="input-group mt-2">
                         {{ form.pesquisarpor(class="form-control form-control-lm") }}
                         <div class="input-group-append">
-                          <!-- {{ form.submitpesquisarpor(class="btn btn-outline-info") }} -->
-
-                          <a id="pesquisar_id" class="btn btn-ligth btn-sm my-2" href="{{ url_for('conta.pesquisar', id_data=id_data, nome_setor='GESAC') }}" title="Pesquisar">
-                            <i class="material-icons">search</i>
-                          </a>
-
+                          {{ form.submitpesquisarpor(class="btn btn-outline-info") }}
                         </div>
                       </div>
                     </div>
-
                 </div>
               </div>
 
