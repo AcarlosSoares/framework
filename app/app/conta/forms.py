@@ -87,8 +87,3 @@ class AlteraSenhaContaUsuarioForm(FlaskForm):
 
 class ListaGrupoForm(FlaskForm):
   hiden = StringField('')
-
-
-class PesquisarSetorForm(FlaskForm):
-  pesquisarpor = StringField('Pesquisar')
-
